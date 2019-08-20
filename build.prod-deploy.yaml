@@ -89,10 +89,15 @@ pipelines:
                   args:
                       credentialsId: PRODUCTION_ITINVENTORY_SMTP_SERVER
                       variable: SMTP_SERVER
+            configFiles:
+                - fileId: PRODUCTION_ITINVENTORY_APPSETTINGS_JSON
+                  targetLocation: env/PROD/itinventory.cqlcorp.com/appsettings.json
+                  replaceTokens: true
             script:
                 - export API_SFTPROOT=/
 
                 - export API_WEBCONFIGTEMPLATE=env/PROD/itinventory.cqlcorp.com/web.config.template
+                - export API_APPSETTINGSJSON=env/PROD/itinventory.cqlcorp.com/appsettings.json
 
                 - export SFTPURI="sftp://$SFTPUSER:$SFTPPASSWORD@$SFTPHOST"
                 - cp env/PROD/app_offline.htm /tmp/app_offline.htm
