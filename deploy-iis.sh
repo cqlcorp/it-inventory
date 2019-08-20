@@ -53,7 +53,7 @@ put /tmp/app_offline.htm -o $API_SFTPROOT/app_offline.htm
 mirror --verbose=3 -R $ARTIFACTS_ROOT/backend-api $API_SFTPROOT/$APPDIRNAME
 mirror --verbose=3 -R $ARTIFACTS_ROOT/frontend-admin $API_SFTPROOT/$APPDIRNAME/wwwroot
 
-put $API_APPSETTINGSJSON $API_SFTPROOT/$APPDIRNAME/appsettings.json
+put $API_APPSETTINGSJSON -o $API_SFTPROOT/$APPDIRNAME/appsettings.json
 put /tmp/api-web.config -o $API_SFTPROOT/web.config
 
 rm $API_SFTPROOT/app_offline.htm
