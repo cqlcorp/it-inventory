@@ -9,6 +9,7 @@ import {concatStyles as s} from '../../../utilities/mikesConcat'
 import {DropdownList} from '../../reusables/Dropdown/DropdownList'
 import {Checkbox} from '../Checkbox/Checkbox'
 import {Button} from '../Button/Button'
+import {Input} from '../Input/Input'
 
 // Styles
 import styles from './ProgramForm.module.css'
@@ -161,22 +162,24 @@ export const ProgramForm: React.SFC<IProgramFormProps> = props => {
 
             <Group direction={'row'} justify={'between'}>
                 <div className={styles.inputContainer}>
-                    <div className={styles.inputText}>License Key</div>
-                    <input
-                        type='text'
-                        className={styles.input}
+                    <Input
+                        label={'License Key'}
                         value={state.licenseKey.value}
-                        onChange={e => setState({...state, licenseKey: {value: e.target.value, changed: true}})}
+                        onChange={(e: any) => setState({...state, licenseKey: {value: e.target.value, changed: true}})}
+                        maxChars={100}
+                        width={'100%'}
                     />
                 </div>
 
                 <div className={styles.inputContainer}>
-                    <div className={styles.inputText}>Purchase Link</div>
-                    <input
-                        type='text'
-                        className={styles.input}
+                    <Input
+                        label={'Purchase Link'}
                         value={state.purchaseLink.value}
-                        onChange={e => setState({...state, purchaseLink: {value: e.target.value, changed: true}})}
+                        onChange={(e: any) =>
+                            setState({...state, purchaseLink: {value: e.target.value, changed: true}})
+                        }
+                        maxChars={250}
+                        width={'100%'}
                     />
                 </div>
             </Group>

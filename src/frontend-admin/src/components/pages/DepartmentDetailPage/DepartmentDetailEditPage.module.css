@@ -61,22 +61,9 @@
     height: 10px;
     margin-top: 50px;
 }
-
-/* name and date */
-.input {
-    width: 380px;
-    height: 45px;
-    border: 1.5px solid #a5a5a5;
-    border-radius: 3px;
-    font-size: 18px;
-    padding-left: 12px;
+.deptNameInput {
+    width: fit-content;
 }
-.text {
-    color: #a5a5a5;
-    font-size: 24px;
-    text-align: left;
-}
-
 .employeeDepartment {
     display: flex;
     flex-direction: row;

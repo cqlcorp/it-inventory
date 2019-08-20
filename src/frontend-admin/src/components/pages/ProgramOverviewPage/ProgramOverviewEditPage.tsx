@@ -12,6 +12,7 @@ import {PictureInput} from '../../reusables/PictureInput/PictureInput'
 import {ProgramForm, IProgramFormInputs} from '../../reusables/ProgramForm/ProgramForm'
 import {Checkbox} from '../../reusables/Checkbox/Checkbox'
 import {BackButton} from '../../reusables/BackButton/BackButton'
+import {Input} from '../../reusables/Input/Input'
 
 // Utils
 import {formatDate} from '../../../utilities/FormatDate'
@@ -531,14 +532,14 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
 
                     <Group justify={'between'} className={styles.row1Group}>
                         <div className={id !== 'new' ? styles.nameInput : styles.nameInputWithEdit}>
-                            <div className={styles.inputText}>Program Name</div>
-                            <input
-                                type='text'
-                                className={styles.input}
+                            <Input
+                                label={'Program Name'}
                                 value={overviewInputs.name.value}
-                                onChange={e =>
+                                onChange={(e: any) =>
                                     setOverviewInputs({...overviewInputs, name: {value: e.target.value, changed: true}})
                                 }
+                                maxChars={100}
+                                width={'100%'}
                             />
                         </div>
 
@@ -660,12 +661,12 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                         <div className={styles.pluginForm}>
                             <Group justify={'between'} className={styles.pluginGroup}>
                                 <div className={styles.pluginInputContainerRow1}>
-                                    <div className={styles.inputText}>Plugin Name</div>
-                                    <input
-                                        type='text'
-                                        className={s(styles.input, styles.pluginInputRow1)}
+                                    <Input
+                                        label={'Plugin Name'}
                                         value={pluginInput.name}
-                                        onChange={e => setPluginInput({...pluginInput, name: e.target.value})}
+                                        onChange={(e: any) => setPluginInput({...pluginInput, name: e.target.value})}
+                                        maxChars={100}
+                                        width={'100%'}
                                     />
                                 </div>
 

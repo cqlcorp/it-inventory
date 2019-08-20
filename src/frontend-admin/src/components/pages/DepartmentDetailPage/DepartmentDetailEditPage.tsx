@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 
 // Components
 import {AddDropdown} from '../../reusables/Dropdown/AddDropdown'
-
+import {Input} from '../../reusables/Input/Input'
 import 'react-datepicker/dist/react-datepicker.css'
 
 // Utils
@@ -232,12 +232,12 @@ export const DepartmentDetailEditPage: React.SFC<IDepartmentDetailEditPageProps>
                 </div>
 
                 <div className={styles.row}>
-                    <div className={styles.text}>Department Name</div>
-                    <input
-                        type='text'
-                        className={styles.input}
-                        placeholder={deptData.departmentName}
-                        onChange={e => setDeptData({...deptData, departmentName: e.target.value})}
+                    <Input
+                        label={'Department Name'}
+                        value={deptData.departmentName}
+                        onChange={(e: any) => setDeptData({...deptData, departmentName: e.target.value})}
+                        maxChars={50}
+                        className={styles.deptNameInput}
                     />
                 </div>
 

@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker'
 import {PictureInput} from '../../reusables/PictureInput/PictureInput'
 import {AddDropdown} from '../../reusables/Dropdown/AddDropdown'
 import {BackButton} from '../../reusables/BackButton/BackButton'
+import {Input} from '../../reusables/Input/Input'
 
 // Utils
 import {concatStyles as s} from '../../../utilities/mikesConcat'
@@ -920,27 +921,25 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
                                 </Button>
                             ) : (
                                 selectedEmployee && (
-                                    <input
-                                        type='text'
-                                        className={styles.input}
+                                    <Input
                                         value={selectedEmployee.name}
-                                        onChange={e => {
+                                        onChange={(e: any) => {
                                             setSelectedEmployee({name: e.target.value, id: parseInt(match.params.id)})
                                             setChanged(true)
                                         }}
+                                        maxChars={50}
                                     />
                                 )
                             )}
 
-                            <div className={styles.text}>Role</div>
-                            <input
-                                type='text'
-                                className={styles.input}
+                            <Input
+                                label={'Role'}
                                 value={roleInput}
-                                onChange={e => {
+                                onChange={(e: any) => {
                                     setRoleInput(e.target.value)
                                     setChanged(true)
                                 }}
+                                maxChars={100}
                             />
                         </div>
                     </div>
