@@ -237,6 +237,13 @@ export const ProgramForm: React.SFC<IProgramFormProps> = props => {
                         <div />
                     </div>
                 </Button>
+                {selectedEmployee && selectedEmployee.id > 0 && (
+                    <Button
+                        text='Unassign'
+                        onClick={() => setSelectedEmployee({id: -1, name: ' '})}
+                        className={styles.unassign}
+                    />
+                )}
             </div>
             <div className={styles.line} />
         </div>

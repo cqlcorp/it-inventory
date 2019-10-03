@@ -174,7 +174,7 @@ input:checked ~ .insideCheckmarkAdmin {
 
 /*Emp Dropdown*/
 .assignContainer {
-    width: 30%;
+    width: 100%;
 }
 
 .employeeDropdownContainer {
@@ -182,6 +182,9 @@ input:checked ~ .insideCheckmarkAdmin {
 }
 .employeeDropdownButton {
     background: white;
+    width: 270px;
+    float: left;
+    margin-right: 25px;
 }
 
 .employeeDropdownButton:hover {
@@ -190,7 +193,8 @@ input:checked ~ .insideCheckmarkAdmin {
 
 .employeeDropdownTitle {
     line-height: 40px;
-    width: 380px;
+    min-width: 265px;
+    width: 100%;
     height: 45px;
     font-size: 18px;
     font-family: cqlRegularFont;
