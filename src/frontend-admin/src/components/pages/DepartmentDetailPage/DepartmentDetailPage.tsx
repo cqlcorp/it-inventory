@@ -66,7 +66,7 @@ export const DepartmentDetailPage: React.SFC<IDepartmentDetailPageProps> = props
         if (isProgramCostPerYear === true) {
             return formatMoney(programCostPerYear) + ' /year'
         } else {
-            return formatMoney(programCostPerYear) + ' /mo'
+            return formatMoney(programCostPerYear / 12) + ' /mo'
         }
     }
 
