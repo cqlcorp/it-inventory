@@ -93,6 +93,7 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
 
     const [pluginList, setPluginList] = useState<IPluginInfo[]>([])
 
+    // const [programInput, setProgramInput] = useState<IProgramFormInputs>()
     const [programInput, setProgramInput] = useState<IProgramFormInputs>({
         name: {value: '', changed: false},
         programName: {value: overviewInputs.name.value, changed: false},
@@ -149,6 +150,39 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                     )
                     setProgramRows(prog)
 
+                    console.log(
+                        '--- data[0].programOverview\n    program = ' +
+                            data[0].programOverview.program +
+                            '\n    cost = ' +
+                            data[0].programOverview.progCostPerYear
+                    )
+                    setProgramUpdateInput({
+                        name: {value: data[0].programOverview.program, changed: false},
+                        programName: {value: data[0].programOverview.program, changed: false},
+                        // description: {value: data[0].description, changed: false},
+                        description: {value: '', changed: false},
+                        renewalDate: {value: new Date(), changed: false},
+                        purchaseDate: {value: new Date(), changed: false},
+                        // purchaseLink: {value: data[0].programPurchaseLink, changed: false},
+                        purchaseLink: {value: '', changed: false},
+                        licenseKey: {
+                            value: data[0].programOverview.programLicenseKey
+                                ? data[0].programOverview.programLicenseKey
+                                : '',
+                            changed: false,
+                        },
+                        // cost: {value: data[0].programOverview.progCostPerYear / (12 / data[0].monthsPerRenewal), changed: false},
+                        cost: {value: data[0].programOverview.progCostPerYear, changed: false},
+                        flatCost: {
+                            value: data[0].programOverview.progFlatCost ? data[0].programOverview.progFlatCost : 0,
+                            changed: false,
+                        },
+                        // monthsPerRenewal: {value: data[0].monthsPerRenewal, changed: false,},
+                        monthsPerRenewal: {value: 0, changed: false},
+                        hasFlatCost: data[0].programOverview.progFlatCost > 0 ? true : false,
+                        hasRecurringCost: data[0].programOverview.progCostPerYear > 0 ? true : false,
+                    })
+
                     setOverviewInputs(o => {
                         return {...o, isLicense: {value: data[0].programOverview.isLicense, changed: false}}
                     })
@@ -186,6 +220,38 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                     setPluginList(plugList)
                 })
                 .catch((err: any) => console.error(err))
+
+            // console.log('--Just before--')
+            // axios
+            //     // .get(`/detail/program/${id}`)
+            //     // .get(`/detail/program/${props.match.params.id}`)
+            //     .get(`/detail/program/${id}/${archived === 'archived' ? true : false}`)
+            //     .then((data: any) => {
+            //         console.log('----Just inside----')
+            //         console.log('-------- id: ' + {id})
+            //         console.log('------ data: ' + data)
+            //         console.log('----- ' + props.match.params.id)
+            //         setProgramInput({
+            //             name: {value: data[0].programName, changed: false},
+            //             programName: {value: data[0].programName, changed: false},
+            //             description: {value: data[0].description, changed: false},
+            //             renewalDate: {value: new Date(data[0].renewalDate), changed: false},
+            //             purchaseDate: {value: new Date(data[0].dateBought), changed: false},
+            //             purchaseLink: {value: data[0].programPurchaseLink, changed: false},
+            //             licenseKey: {value: data[0].programLicenseKey ? data[0].programLicenseKey : '', changed: false},
+            //             cost: {value: data[0].programCostPerYear / (12 / data[0].monthsPerRenewal), changed: false},
+            //             flatCost: {value: data[0].programFlatCost ? data[0].programFlatCost : 0, changed: false},
+            //             monthsPerRenewal: {
+            //                 value: data[0].monthsPerRenewal,
+            //                 changed: false,
+            //             },
+            //             hasFlatCost: data[0].programFlatCost > 0 ? true : false,
+            //             hasRecurringCost: data[0].programCostPerYear > 0 ? true : false,
+            //         })
+            //         console.log('---Inside after---')
+            //     })
+            //     .catch((err: any) => console.error(err))
+            // console.log('--Right after--')
         }
 
         axios
@@ -201,7 +267,8 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                 setEmployeeDropdown(employees)
             })
             .catch((err: any) => console.error(err))
-    }, [archived, id, loginContextVariables])
+        // }, [archived, id, loginContextVariables])
+    })
 
     const handleProgramRemove = (row: ITableItem[]) => {
         //add to removed array
@@ -573,6 +640,8 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                                 <ProgramForm
                                     state={programUpdateInput}
                                     setState={setProgramUpdateInput}
+                                    // state={programInput}
+                                    // setState={setProgramInput}
                                     employeeDropdown={employeeDropdown}
                                     selectedEmployee={selectedEmployee}
                                     setSelectedEmployee={setSelectedEmployee}
