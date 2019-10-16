@@ -277,6 +277,19 @@ input:checked ~ .insideCheckmarkAdmin {
     background: white;
 }
 
+.noNewEmpsMsg {
+    color: red;
+    text-align: left;
+    font-style: italic;
+    width: 380px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.employeeRoleInput input {
+    display: block;
+}
+
 .employeeDropdownTitle {
     line-height: 40px;
     width: 380px;
