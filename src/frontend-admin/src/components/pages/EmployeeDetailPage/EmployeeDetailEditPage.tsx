@@ -126,6 +126,7 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
 
     const [employeeDropdown, setEmployeeDropdown] = useState<any[]>([{name: 'Select A New Employee', id: -1}])
     const [selectedEmployee, setSelectedEmployee] = useState<{name: string; id: number}>(employeeDropdown[0])
+    const [noNewEmps, setNoNewEmps] = useState(false)
 
     useEffect(() => {
         const axios = new AxiosService(loginContextVariables)
@@ -134,6 +135,15 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
             .then((data: any) => {
                 var availableEmp: any[] = []
                 data[0].myDomainUsers.sort().map((emp: any, index: number) => availableEmp.push({name: emp, id: index}))
+                //if there aren't any new employees to add, show a message instead of an empty list
+                if (availableEmp.length == 0) {
+                    setNoNewEmps(true)
+                    availableEmp.push({
+                        name: '(No new employees available)',
+                        id: -1,
+                    })
+                }
+
                 setEmployeeDropdown(availableEmp)
 
                 setDeptList(data[0].departments)
@@ -621,7 +631,8 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
             //make sure no inputs are null/undefined/empty
             match.params.id === 'new' &&
             deptInput &&
-            selectedEmployee.name !== 'Select A New Employee'
+            selectedEmployee.name !== 'Select A New Employee' &&
+            selectedEmployee.name !== '(No New Employees Available)'
         ) {
             name = selectedEmployee.name.split(' ')
             var postEmployee = {
@@ -932,6 +943,13 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
                                 )
                             )}
 
+                            {noNewEmps && (
+                                <div className={styles.noNewEmpsMsg}>
+                                    No new employees to add. If you think this is incorrect, please make sure that the
+                                    employee you want to add is in the CQL Distribution group.
+                                </div>
+                            )}
+
                             <Input
                                 label={'Role'}
                                 value={roleInput}
@@ -940,6 +958,7 @@ export const EmployeeDetailEditPage: React.SFC<IEmployeeDetailEditPageProps> = p
                                     setChanged(true)
                                 }}
                                 maxChars={100}
+                                className={styles.employeeRoleInput}
                             />
                         </div>
                     </div>
