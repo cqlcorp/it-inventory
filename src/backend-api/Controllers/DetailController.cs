@@ -130,9 +130,61 @@ namespace backend_api.Controllers
                 // list to hold the individual programs from the program overview
                 List<object> inDivPrograms = new List<object>();
 
+                // check if they all have a purchase date
+                bool havePurchaseDate = UsefulProgramsList.All(x => x.DateBought != null) ? true : false;
+                bool samePurchaseDate = havePurchaseDate; // if they don't all have a purchase date, they can't all match
+                // grab a purchase date value and hang onto it for comparison purposes
+                var purchaseDate = UsefulProgramsList.Select(x => x.DateBought).FirstOrDefault();
+
+                // check if they all have a renewal date
+                bool haveRenewalDate = UsefulProgramsList.All(x => x.RenewalDate != null) ? true : false;
+                bool sameRenewalDate = haveRenewalDate; // if they don't all have a purchase date, they can't all match
+                // grab a renewal date value and hang onto it for comparison purposes
+                var renewalDate = UsefulProgramsList.Select(x => x.RenewalDate).FirstOrDefault();
+
+                // check if they all have a purchase link
+                bool havePurchaseLink = UsefulProgramsList.All(x => x.ProgramPurchaseLink != "") ? true : false;
+                bool samePurchaseLink = haveRenewalDate; // if they don't all have a purchase date, they can't all match
+                // grab a purchase link value and hang onto it for comparison purposes
+                var purchaseLink = UsefulProgramsList.Select(x => x.ProgramPurchaseLink).FirstOrDefault();
+
+                // check if they all have a description
+                bool haveDescription = UsefulProgramsList.All(x => x.Description != "") ? true : false;
+                // grab a description value and hang onto it for comparison purposes
+                var progDescrip = UsefulProgramsList.Select(x => x.Description).FirstOrDefault();
+                bool sameDescription = true;
+
                 //loop through all the individual programs that are under of the current overview program
                 foreach (var prog in UsefulProgramsList)
                 {
+                    // see if the program's description matches the others (but don't bother if there's already been a mismatch)
+                    if (sameDescription == true) {
+                        if (prog.Description != progDescrip) {
+                            sameDescription = false;
+                        }
+                    }
+                    // check if purchase date matches the others
+                    if (samePurchaseDate == true) {
+                        if (prog.DateBought != purchaseDate) {
+                            samePurchaseDate = false;
+                            purchaseDate = null;
+                        }
+                    }
+                    // check if renewal date matches the others
+                    if (sameRenewalDate == true) {
+                        if (prog.RenewalDate != renewalDate) {
+                            sameRenewalDate = false;
+                            renewalDate = null;
+                        }
+                    }
+                    // check if purchase link matches the others
+                    if (samePurchaseLink == true) {
+                        if (prog.ProgramPurchaseLink != purchaseLink) {
+                            samePurchaseLink = false;
+                            purchaseLink = "";
+                        }
+                    }
+
                     // holds the employee name for concatenation purposes 
                     var employeeName = "";
 
@@ -161,6 +213,16 @@ namespace backend_api.Controllers
                 }
                 // lambda to check if all the indiv programs under this name are a license
                 bool isLicense = UsefulProgramsList.All(x => x.IsLicense == true) ? true : false;
+
+                var programDescription = "";
+                // if all the descriptions match, save that description in a var to return later
+                if (sameDescription == true) {
+                    programDescription = progDescrip;
+                }
+
+                // get the number of months per renewal
+                var monthsPerRenewal = UsefulProgramsList.Select(x => x.MonthsPerRenewal).FirstOrDefault();
+
                 // creating a list of plug-ins that will be returned
                 List<object> ListOfPlugins = new List<object>();
 
@@ -198,6 +260,11 @@ namespace backend_api.Controllers
                     ProgCostPerYear,
                     UsefulProgramsList.FirstOrDefault().IsCostPerYear,
                     ProgramlicenseKey = isAdmin() ? ProgramLicenseKey : null,
+                    programDescription,
+                    monthsPerRenewal,
+                    purchaseDate,
+                    renewalDate,
+                    purchaseLink,
                 };
                 // returning the amalgamation of the various returnables into a nice JSON object :)
                 var ProgramOverViewPage = new { programOverview, inDivPrograms, ListOfPlugins };

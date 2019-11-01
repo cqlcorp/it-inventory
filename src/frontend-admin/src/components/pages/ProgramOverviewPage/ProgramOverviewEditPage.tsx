@@ -151,20 +151,30 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                     setProgramRows(prog)
 
                     console.log(
-                        '--- data[0].programOverview\n    program = ' +
+                        '-- data[0].programOverview\n    program = ' +
                             data[0].programOverview.program +
                             '\n    cost = ' +
-                            data[0].programOverview.progCostPerYear
+                            data[0].programOverview.progCostPerYear +
+                            '\n    licenseKey = ' +
+                            data[0].programOverview.programlicenseKey +
+                            '\n    renewalDate = ' +
+                            data[0].programOverview.renewalDate +
+                            '\n    purchaseDate = ' +
+                            new Date(data[0].programOverview.purchaseDate)
                     )
                     setProgramUpdateInput({
                         name: {value: data[0].programOverview.program, changed: false},
                         programName: {value: data[0].programOverview.program, changed: false},
-                        // description: {value: data[0].description, changed: false},
-                        description: {value: '', changed: false},
-                        renewalDate: {value: new Date(), changed: false},
-                        purchaseDate: {value: new Date(), changed: false},
-                        // purchaseLink: {value: data[0].programPurchaseLink, changed: false},
-                        purchaseLink: {value: '', changed: false},
+                        description: {value: data[0].programOverview.programDescription, changed: false},
+                        renewalDate: {
+                            value: data[0].programOverview.renewalDate ? new Date(data[0].programOverview.renewalDate) : new Date(),
+                            changed: false
+                        },
+                        purchaseDate: {
+                            value: data[0].programOverview.purchaseDate ? new Date(data[0].programOverview.purchaseDate) : new Date(),
+                            changed: false
+                        },
+                        purchaseLink: {value: data[0].programOverview.purchaseLink, changed: false},
                         licenseKey: {
                             value: data[0].programOverview.programLicenseKey
                                 ? data[0].programOverview.programLicenseKey
@@ -177,8 +187,7 @@ export const ProgramOverviewEditPage: React.SFC<IProgramOverviewEditPageProps> =
                             value: data[0].programOverview.progFlatCost ? data[0].programOverview.progFlatCost : 0,
                             changed: false,
                         },
-                        // monthsPerRenewal: {value: data[0].monthsPerRenewal, changed: false,},
-                        monthsPerRenewal: {value: 0, changed: false},
+                        monthsPerRenewal: {value: data[0].programOverview.monthsPerRenewal, changed: false,},
                         hasFlatCost: data[0].programOverview.progFlatCost > 0 ? true : false,
                         hasRecurringCost: data[0].programOverview.progCostPerYear > 0 ? true : false,
                     })
